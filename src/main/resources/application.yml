@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: security-variable.yml
+  application:
+    name: MORU_Feedback
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moru_feedback?serverTimeZone=Asia/Seoul
+    username: root
+    password: ${mysql.password}
+
+mybatis:
+  mapper-locations: mappers/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
