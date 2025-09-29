@@ -1,6 +1,8 @@
 package com.pallidamors.moru_feedback.user;
 
+import com.pallidamors.moru_feedback.user.domain.User;
 import com.pallidamors.moru_feedback.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +46,27 @@ public class UserRestController {
             resultMap.put("isDuplicate", true);
         } else{
             resultMap.put("isDuplicate", false);
+        }
+
+        return resultMap;
+    }
+
+    @PostMapping("/login-process")
+    public Map<String, String> login(
+            @RequestParam String loginId
+            , @RequestParam String password
+            , HttpSession session){
+
+        User user = userService.getUser(loginId, password);
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        if(user != null) {
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("userLoginId", user.getLoginId());
+            resultMap.put("result", "success");
+        } else {
+            resultMap.put("result", "fail");
         }
 
         return resultMap;
