@@ -1,8 +1,15 @@
 package com.pallidamors.moru_feedback.user.service;
 
 import com.pallidamors.moru_feedback.common.MD5HashingEncoder;
+import com.pallidamors.moru_feedback.common.SHA256HashiEncoder;
+import com.pallidamors.moru_feedback.user.domain.User;
 import com.pallidamors.moru_feedback.user.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -21,7 +28,7 @@ public class UserService {
             , String name
             , String email) {
 
-        String encodePassword = MD5HashingEncoder.encode(password);
+        String encodePassword = SHA256HashiEncoder.encode(password);
 
         int count = userRepository.insertUser(loginId, encodePassword, name, email);
 
@@ -40,6 +47,15 @@ public class UserService {
         }else{
             return true;
         }
+    }
+
+
+
+    public User getUser(String loginId, String password) {
+
+        String encodedPassword = SHA256HashiEncoder.encode(password);
+
+        return userRepository.selectUser(loginId, encodedPassword);
     }
 
 }

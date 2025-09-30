@@ -31,4 +31,22 @@
             `loginId`= #{loginId}
     </select>
 
+    <select id="selectUser" parameterType="map"
+            resultType="com.pallidamors.moru_feedback.user.domain.User">
+        SELECT
+            `id`
+             , `login_id`
+             , `password`
+             , `name`
+             , `email`
+             , `created_at`
+             , `updated_at`
+        FROM
+            `user`
+        WHERE
+            `login_id` = #{loginId}
+          AND `password` = #{password}
+
+    </select>
+
 </mapper>
