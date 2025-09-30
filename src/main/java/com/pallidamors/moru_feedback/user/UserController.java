@@ -1,5 +1,6 @@
 package com.pallidamors.moru_feedback.user;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -18,5 +19,13 @@ public class UserController {
     @GetMapping("/login")
     public String loginForm() {
         return "user/login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+
+        session.invalidate();
+
+        return "redirect:/user/login";
     }
 }
